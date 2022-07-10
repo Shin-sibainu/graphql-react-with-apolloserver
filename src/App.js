@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { gql, useQuery } from "@apollo/client";
+
+const DOGS = gql`
+  query {
+    dogs {
+      id
+      name
+      thumbnail
+    }
+  }
+`;
 
 function App() {
+  const { loading, error, data } = useQuery(DOGS);
+  console.log(data);
+  console.log(loading);
+  if (loading) return "ロード中・・・";
+
+  if (error) return `エラー！ ${error.message}`;
+
+  //JSON化することで文字列として出力できる。JSON化しないとオブジェクトの状態だからHTMLとして出力されない。
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* {JSON.stringify(data)} */}
+      {data.dogs.map((dog) => (
+        <div key={dog.id}>
+          <p>{dog.name}</p>
+          <img src={dog.thumbnail}></img>
+        </div>
+      ))}
     </div>
   );
 }
