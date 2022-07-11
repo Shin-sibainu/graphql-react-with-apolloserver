@@ -2,11 +2,14 @@ import "./App.css";
 import { gql, useQuery } from "@apollo/client";
 
 const DOGS = gql`
-  query {
+  {
     dogs {
       id
       name
-      thumbnail
+      description
+      thumbnail {
+        url
+      }
     }
   }
 `;
@@ -21,15 +24,22 @@ function App() {
 
   //JSON化することで文字列として出力できる。JSON化しないとオブジェクトの状態だからHTMLとして出力されない。
   return (
-    <div className="App">
-      {/* {JSON.stringify(data)} */}
-      {data.dogs.map((dog) => (
-        <div key={dog.id}>
-          <p>{dog.name}</p>
-          <img src={dog.thumbnail}></img>
-        </div>
-      ))}
-    </div>
+    <>
+      <h1>GraphQLとReact</h1>
+
+      <div className="dogsContainer">
+        {/* {JSON.stringify(data)} */}
+        {data.dogs.map((dog) => (
+          <div key={dog.id}>
+            <div className="dogCard">
+              <img src={dog.thumbnail.url}></img>
+              <p>{dog.name}</p>
+              <p>{dog.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

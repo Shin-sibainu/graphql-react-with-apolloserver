@@ -5,7 +5,7 @@ import App from "./App";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "https://api-ap-northeast-1.graphcms.com/v2/cl5g2gf673boh01ug6wouebf0/master",
   cache: new InMemoryCache(),
 });
 
